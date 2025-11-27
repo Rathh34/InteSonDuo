@@ -13,157 +13,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36d79f6f-47d7-46b5-bffb-4fcdda489b86" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditorPerProjectUserSettings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditorPerProjectUserSettings.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Back_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Front_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Front_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Front_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Left_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Death/MM_Death_Right_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Aim/AO_Pistol.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS1.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS_AO_CD.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Aim/MF_Pistol_Idle_ADS_AO_CU.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jog/MF_Pistol_Jog_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_Fall_Loop.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_RecoveryAdditive.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Jump/MM_Pistol_Jump_Start.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MF_Pistol_Idle_ADS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MM_Pistol_DryFire.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MM_Pistol_Equip.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MM_Pistol_Fire.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MM_Pistol_Fire_Montage.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/MM_Pistol_Reload.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Pistol/Walk/MF_Pistol_Walk_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/AIM/AO_Rifle.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CC.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CD.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/AIM/MM_Rifle_Idle_ADS_AO_CU.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Back_Med_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Hvy_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Lgt_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Med_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/HitReact/MM_HitReact_Front_Med_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jog/MF_Rifle_Jog_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Apex.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Fall_Land.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Fall_Loop.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_RecoveryAdditive.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Start.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Jump/MM_Rifle_Jump_Start_Loop.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/MF_Rifle_Idle_ADS.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/MM_Rifle_DryFire.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/MM_Rifle_Equip.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/MM_Rifle_Fire.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/MM_Rifle_Reload.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Rifle/Walk/MF_Rifle_Walk_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/ABP_Unarmed.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Attack/MM_Attack_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Attack/MM_ChargedAttack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/BS_Idle_Walk_Run.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jog/MF_Unarmed_Jog_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jump/MM_Dash.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jump/MM_Fall_Loop.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jump/MM_Jump.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jump/MM_Land.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Jump/MM_WallJump.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/MM_Idle.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Bwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Fwd_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Left.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Anims/Unarmed/Walk/MF_Unarmed_Walk_Right.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Materials/M_Mannequin.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Materials/Manny/MI_Manny_01_New.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Materials/Manny/MI_Manny_02_New.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Materials/Quinn/MI_Quinn_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Materials/Quinn/MI_Quinn_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Meshes/SK_Mannequin.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Rigs/CR_Mannequin_Body.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Rigs/CR_Mannequin_FootIK.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Rigs/CR_Mannequin_Procedural.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Rigs/PA_Mannequin.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_01_BN.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_01_D.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_01_MRA.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_02_BN.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_02_D.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_02_MRA.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Manny/T_Manny_02_N.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_01_D.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_01_MRA.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_01_N.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_02_D.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_02_MRA.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Quinn/T_Quinn_02_N.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Characters/Mannequins/Textures/Shared/T_UE_Logo_M.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.InteSonDuo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InteSonDuo/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Core/Characters/BP_ThirdPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Core/Characters/BP_ThirdPersonCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/Actions/IA_Aim.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/Actions/IA_Flashlight.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/Actions/IA_Interaction.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/Actions/IA_Sprint.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/IMC_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Input/IMC_Default.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Maps/Main_Menu_Map.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Maps/Main_Menu_Map.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Actions/IA_Jump.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Actions/IA_Look.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Actions/IA_MouseLook.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Actions/IA_Move.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/IMC_Default.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/IMC_MouseLook.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Touch/BPI_TouchInterface.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Touch/UI_Thumbstick.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Input/Touch/UI_TouchSimple.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/AssetsCleaner/Binaries/Win64/UnrealEditor-AssetsCleaner.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AssetsCleaner/Binaries/Win64/UnrealEditor-AssetsCleaner.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/AutoSizeComments/Binaries/Win64/UnrealEditor-AutoSizeComments.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/AutoSizeComments/Binaries/Win64/UnrealEditor-AutoSizeComments.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/BlueprintAssist/Binaries/Win64/UnrealEditor-BlueprintAssist.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/BlueprintAssist/Binaries/Win64/UnrealEditor-BlueprintAssist.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/ElectronicNodes/Binaries/Win64/UnrealEditor-ElectronicNodes.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/ElectronicNodes/Binaries/Win64/UnrealEditor-ElectronicNodes.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/LowEntryExtStdLib/Binaries/Win64/UnrealEditor-LowEntryExtendedStandardLibrary.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/LowEntryExtStdLib/Binaries/Win64/UnrealEditor-LowEntryExtendedStandardLibrary.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Plugins/LowEntryExtStdLib/Binaries/Win64/UnrealEditor-LowEntryExtendedStandardLibraryEditor.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/LowEntryExtStdLib/Binaries/Win64/UnrealEditor-LowEntryExtendedStandardLibraryEditor.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Materials/Bodycam_Effect/PP_Bodycam_Effect.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Horror_Template/Materials/Bodycam_Effect/PP_Bodycam_Effect.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,6 +159,7 @@
       <workItem from="1764240817561" duration="3080000" />
       <workItem from="1764248444906" duration="953000" />
       <workItem from="1764249811304" duration="623000" />
+      <workItem from="1764250475436" duration="1466000" />
     </task>
     <servers />
   </component>
