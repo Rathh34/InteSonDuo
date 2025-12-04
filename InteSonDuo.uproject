@@ -32,6 +32,14 @@
 		{
 			"Name": "HorrorAudioManager",
 			"Enabled": false
+		},
+		{
+			"Name": "PhysicsControl",
+			"Enabled": true
+		},
+		{
+			"Name": "Locomotor",
+			"Enabled": true
 		}
 	]
 }
