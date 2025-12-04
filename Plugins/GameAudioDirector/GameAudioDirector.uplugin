@@ -1,0 +1,19 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Game Audio Director",
+	"Description": "Simple audio director: tension, ambience, footsteps, random stingers, jumpscares.",
+	"Category": "Audio",
+	"CreatedBy": "You",
+	"CreatedByURL": "",
+	"Modules": [
+		{
+			"Name": "GameAudioDirector",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"CanContainContent": false,
+	"EnabledByDefault": true
+}

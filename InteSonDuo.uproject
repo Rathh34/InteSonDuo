@@ -24,6 +24,14 @@
 		{
 			"Name": "GameplayStateTree",
 			"Enabled": true
+		},
+		{
+			"Name": "TensionAudioManager",
+			"Enabled": false
+		},
+		{
+			"Name": "HorrorAudioManager",
+			"Enabled": false
 		}
 	]
 }
