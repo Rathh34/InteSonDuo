@@ -1,4 +1,5 @@
 #include "GameAudioDirectorComponent.h"
+
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
@@ -12,9 +13,6 @@ UGameAudioDirectorComponent::UGameAudioDirectorComponent()
     InterpSpeed = (DefaultTransitionTime > 0.01f)
         ? (1.0f / DefaultTransitionTime)
         : 1000.0f;
-
-    TimeSinceLastStinger = 0.0f;
-    NextStingerDelay = 0.0f;
 }
 
 void UGameAudioDirectorComponent::BeginPlay()
@@ -40,9 +38,6 @@ void UGameAudioDirectorComponent::BeginPlay()
     CalmAC   = SpawnLoop(CalmCue);
     UneasyAC = SpawnLoop(UneasyCue);
     PanicAC  = SpawnLoop(PanicCue);
-
-    TimeSinceLastStinger = 0.0f;
-    NextStingerDelay = MinStingerInterval_LowTension;
 }
 
 void UGameAudioDirectorComponent::TickComponent(
@@ -54,7 +49,6 @@ void UGameAudioDirectorComponent::TickComponent(
 
     UpdateTension(DeltaTime);
     UpdateAmbienceVolumes();
-    UpdateRandomStingers(DeltaTime);
 }
 
 // ========= TENSION =========
@@ -106,9 +100,26 @@ void UGameAudioDirectorComponent::UpdateAmbienceVolumes()
         PanicVol  = Alpha;
     }
 
-    if (CalmAC)   CalmAC->SetVolumeMultiplier(CalmVol);
-    if (UneasyAC) UneasyAC->SetVolumeMultiplier(UneasyVol);
-    if (PanicAC)  PanicAC->SetVolumeMultiplier(PanicVol);
+    if (CalmAC)   CalmAC->SetVolumeMultiplier(CalmVol * MasterVolume);
+    if (UneasyAC) UneasyAC->SetVolumeMultiplier(UneasyVol * MasterVolume);
+    if (PanicAC)  PanicAC->SetVolumeMultiplier(PanicVol * MasterVolume);
+}
+
+// ========= VOLUME CONTROL =========
+
+void UGameAudioDirectorComponent::SetMasterVolume(float NewVolume)
+{
+    MasterVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
+}
+
+void UGameAudioDirectorComponent::SetSFXVolume(float NewVolume)
+{
+    SFXVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
+}
+
+void UGameAudioDirectorComponent::SetUIVolume(float NewVolume)
+{
+    UIVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
 }
 
 // ========= GENERAL SOUND HELPERS =========
@@ -116,26 +127,25 @@ void UGameAudioDirectorComponent::UpdateAmbienceVolumes()
 void UGameAudioDirectorComponent::PlaySound2D(USoundBase* Sound, float Volume, float Pitch)
 {
     if (!Sound) return;
-
-    UGameplayStatics::PlaySound2D(this, Sound, Volume, Pitch);
+    const float FinalVolume = Volume * MasterVolume * SFXVolume;
+    UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
 }
 
 void UGameAudioDirectorComponent::PlaySoundAtLocation(USoundBase* Sound, FVector Location,
                                                       float Volume, float Pitch)
 {
     if (!Sound) return;
-
     UWorld* World = GetWorld();
     if (!World) return;
 
-    UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, Volume, Pitch);
+    const float FinalVolume = Volume * MasterVolume * SFXVolume;
+    UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, FinalVolume, Pitch);
 }
 
 void UGameAudioDirectorComponent::PlaySoundRelativeToPlayer(USoundBase* Sound, FVector Offset,
                                                             float Volume, float Pitch)
 {
     if (!Sound) return;
-
     UWorld* World = GetWorld();
     if (!World) return;
 
@@ -147,11 +157,18 @@ void UGameAudioDirectorComponent::PlaySoundRelativeToPlayer(USoundBase* Sound, F
 
     const FVector CamLocation = CamMgr->GetCameraLocation();
     const FRotator CamRotation = CamMgr->GetCameraRotation();
-
-    const FVector WorldOffset = CamRotation.RotateVector(Offset);
+    const FVector WorldOffset  = CamRotation.RotateVector(Offset);
     const FVector SpawnLocation = CamLocation + WorldOffset;
 
-    UGameplayStatics::PlaySoundAtLocation(World, Sound, SpawnLocation, Volume, Pitch);
+    const float FinalVolume = Volume * MasterVolume * SFXVolume;
+    UGameplayStatics::PlaySoundAtLocation(World, Sound, SpawnLocation, FinalVolume, Pitch);
+}
+
+void UGameAudioDirectorComponent::PlayUISound(USoundBase* Sound, float Volume, float Pitch)
+{
+    if (!Sound) return;
+    const float FinalVolume = Volume * MasterVolume * UIVolume;
+    UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
 }
 
 void UGameAudioDirectorComponent::PlayJumpscare(USoundBase* Stinger, float AmbienceDuck)
@@ -186,11 +203,77 @@ void UGameAudioDirectorComponent::PlayJumpscare(USoundBase* Stinger, float Ambie
     UneasyVol *= AmbienceDuck;
     PanicVol  *= AmbienceDuck;
 
-    if (CalmAC)   CalmAC->SetVolumeMultiplier(CalmVol);
-    if (UneasyAC) UneasyAC->SetVolumeMultiplier(UneasyVol);
-    if (PanicAC)  PanicAC->SetVolumeMultiplier(PanicVol);
+    if (CalmAC)   CalmAC->SetVolumeMultiplier(CalmVol * MasterVolume);
+    if (UneasyAC) UneasyAC->SetVolumeMultiplier(UneasyVol * MasterVolume);
+    if (PanicAC)  PanicAC->SetVolumeMultiplier(PanicVol * MasterVolume);
 
     PlaySoundRelativeToPlayer(Stinger, FVector(100.0f, 0.0f, 0.0f), 1.0f, 1.0f);
+}
+
+// ========= LOOPING SFX =========
+
+void UGameAudioDirectorComponent::StartLoopingSFX2D(USoundBase* Sound, float Volume, float Pitch)
+{
+    if (!Sound) return;
+
+    StopLoopingSFX2D();
+
+    const float FinalVolume = Volume * MasterVolume * SFXVolume;
+
+    LoopingSFX2D = UGameplayStatics::SpawnSound2D(
+        this,
+        Sound,
+        FinalVolume,
+        Pitch,
+        0.0f,
+        nullptr,
+        true,
+        false
+    );
+}
+
+void UGameAudioDirectorComponent::StopLoopingSFX2D()
+{
+    if (LoopingSFX2D)
+    {
+        LoopingSFX2D->Stop();
+        LoopingSFX2D = nullptr;
+    }
+}
+
+void UGameAudioDirectorComponent::StartLoopingSFXAtLocation(USoundBase* Sound, FVector Location,
+                                                            float Volume, float Pitch)
+{
+    if (!Sound) return;
+
+    StopLoopingSFX3D();
+
+    UWorld* World = GetWorld();
+    if (!World) return;
+
+    const float FinalVolume = Volume * MasterVolume * SFXVolume;
+
+    LoopingSFX3D = UGameplayStatics::SpawnSoundAtLocation(
+        World,
+        Sound,
+        Location,
+        FRotator::ZeroRotator,
+        FinalVolume,
+        Pitch,
+        0.0f,
+        nullptr,
+        nullptr,
+        true
+    );
+}
+
+void UGameAudioDirectorComponent::StopLoopingSFX3D()
+{
+    if (LoopingSFX3D)
+    {
+        LoopingSFX3D->Stop();
+        LoopingSFX3D = nullptr;
+    }
 }
 
 // ========= FOOTSTEPS =========
@@ -204,90 +287,24 @@ USoundBase* UGameAudioDirectorComponent::ChooseRandomFromArray(const TArray<USou
     return Array[Index];
 }
 
-void UGameAudioDirectorComponent::PlayFootstepAtLocation(FVector Location)
+void UGameAudioDirectorComponent::PlayFootstepAtLocation(FVector Location, EFootstepSurface Surface)
 {
     UWorld* World = GetWorld();
     if (!World)
         return;
 
-    const bool bPanicMood = (CurrentTension >= 0.6f);
+    const FFootstepSoundList* ListPtr = Footsteps_BySurface.Find(Surface);
+    if (!ListPtr)
+    {
+        ListPtr = Footsteps_BySurface.Find(EFootstepSurface::Default);
+    }
+    if (!ListPtr)
+        return;
 
-    USoundBase* Chosen = nullptr;
-
-    if (bPanicMood)
-        Chosen = ChooseRandomFromArray(Footsteps_Panic);
-    else
-        Chosen = ChooseRandomFromArray(Footsteps_Normal);
-
+    USoundBase* Chosen = ChooseRandomFromArray(ListPtr->Sounds);
     if (!Chosen)
         return;
 
-    UGameplayStatics::PlaySoundAtLocation(World, Chosen, Location);
-}
-
-// ========= RANDOM STINGERS =========
-
-USoundBase* UGameAudioDirectorComponent::ChooseRandomStinger() const
-{
-    const float T = FMath::Clamp(CurrentTension, 0.0f, 1.0f);
-    const bool bHighTension = (T >= 0.6f);
-
-    if (bHighTension && Stingers_HighTension.Num() > 0)
-        return ChooseRandomFromArray(Stingers_HighTension);
-
-    if (Stingers_LowTension.Num() > 0)
-        return ChooseRandomFromArray(Stingers_LowTension);
-
-    return nullptr;
-}
-
-void UGameAudioDirectorComponent::UpdateRandomStingers(float DeltaTime)
-{
-    if (!bEnableRandomStingers || StingerPlayChance <= 0.0f)
-        return;
-
-    TimeSinceLastStinger += DeltaTime;
-
-    if (TimeSinceLastStinger < NextStingerDelay)
-        return;
-
-    if (FMath::FRand() <= StingerPlayChance)
-    {
-        USoundBase* Stinger = ChooseRandomStinger();
-        if (Stinger)
-        {
-            UWorld* World = GetWorld();
-            if (World)
-            {
-                APlayerController* PC = World->GetFirstPlayerController();
-                if (PC)
-                {
-                    APlayerCameraManager* CamMgr = PC->PlayerCameraManager;
-                    if (CamMgr)
-                    {
-                        const FVector CamLocation = CamMgr->GetCameraLocation();
-
-                        const float Distance = FMath::FRandRange(200.0f, 500.0f);
-                        const float AngleDeg = FMath::FRandRange(0.0f, 360.0f);
-                        const float Height   = FMath::FRandRange(-50.0f, 100.0f);
-
-                        const float Rad = FMath::DegreesToRadians(AngleDeg);
-                        const FVector Dir(FMath::Cos(Rad), FMath::Sin(Rad), 0.0f);
-
-                        const FVector SpawnLocation = CamLocation + Dir * Distance + FVector(0.0f, 0.0f, Height);
-
-                        UGameplayStatics::PlaySoundAtLocation(World, Stinger, SpawnLocation);
-                    }
-                }
-            }
-        }
-    }
-
-    const float T = FMath::Clamp(CurrentTension, 0.0f, 1.0f);
-    const float BaseInterval = FMath::Lerp(MinStingerInterval_LowTension,
-                                           MinStingerInterval_HighTension,
-                                           T);
-    const float RandomFactor = FMath::FRandRange(0.7f, 1.3f);
-    NextStingerDelay = BaseInterval * RandomFactor;
-    TimeSinceLastStinger = 0.0f;
+    const float FinalVolume = MasterVolume * SFXVolume;
+    UGameplayStatics::PlaySoundAtLocation(World, Chosen, Location, FinalVolume);
 }

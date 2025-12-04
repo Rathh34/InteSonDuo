@@ -3,21 +3,32 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Sound/SoundCue.h"
+#include "Sound/SoundBase.h"
 #include "Components/AudioComponent.h"
 #include "GameAudioDirectorComponent.generated.h"
 
+UENUM(BlueprintType)
+enum class EFootstepSurface : uint8
+{
+    Default UMETA(DisplayName="Default"),
+    Wood    UMETA(DisplayName="Wood"),
+    Stone   UMETA(DisplayName="Stone"),
+    Metal   UMETA(DisplayName="Metal"),
+    Carpet  UMETA(DisplayName="Carpet")
+};
+
+USTRUCT(BlueprintType)
+struct FFootstepSoundList
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    TArray<USoundBase*> Sounds;
+};
+
 /**
- * Simple game audio director component.
- *
- * Attach this to your Player (recommended) or a central AudioManager actor.
- * From any Blueprint that knows that actor:
- *
- * - Call SetTensionSmooth to drive ambience intensity (0 = safe, 1 = panic).
- * - Use PlaySound2D / PlaySoundAtLocation / PlaySoundRelativeToPlayer for SFX.
- * - Call PlayJumpscare for stingers with ambience ducking.
- * - Call PlayFootstepAtLocation from movement/anim notifies.
- *
- * Random stingers (creaks, whispers) are handled automatically based on tension.
+ * Simple game audio director component: tension, ambience, SFX, footsteps, jumpscares,
+ * and basic controllable looping SFX.
  */
 UCLASS(ClassGroup=(Audio), meta=(BlueprintSpawnableComponent), Blueprintable)
 class GAMEAUDIODIRECTOR_API UGameAudioDirectorComponent : public UActorComponent
@@ -36,66 +47,65 @@ public:
 
     // ========= TENSION CONTROL =========
 
-    /** Smoothly move tension towards NewTension over TimeSeconds. */
     UFUNCTION(BlueprintCallable, Category="Audio Director|Tension")
-    void SetTensionSmooth(
-        UPARAM(DisplayName="New Tension (0-1)") float NewTension,
-        UPARAM(DisplayName="Transition Time (seconds)") float TimeSeconds = 2.0f
-    );
+    void SetTensionSmooth(float NewTension, float TimeSeconds = 2.0f);
 
-    /** Current normalized tension value (0 = calm, 1 = maximum). */
     UFUNCTION(BlueprintPure, Category="Audio Director|Tension")
     float GetTension() const { return CurrentTension; }
 
+    // ========= VOLUME CONTROL =========
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Volume")
+    void SetMasterVolume(float NewVolume);
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Volume")
+    void SetSFXVolume(float NewVolume);
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Volume")
+    void SetUIVolume(float NewVolume);
+
     // ========= GENERAL SOUND HELPERS =========
 
-    /** Play a non-spatial (2D) sound (UI, inventory, menus, global stingers). */
     UFUNCTION(BlueprintCallable, Category="Audio Director|Play 2D")
-    void PlaySound2D(
-        UPARAM(DisplayName="Sound") USoundBase* Sound,
-        UPARAM(DisplayName="Volume Multiplier") float Volume = 1.0f,
-        UPARAM(DisplayName="Pitch Multiplier") float Pitch = 1.0f
-    );
+    void PlaySound2D(USoundBase* Sound, float Volume = 1.0f, float Pitch = 1.0f);
 
-    /** Play a 3D sound at a world location (doors, objects, distant sounds). */
     UFUNCTION(BlueprintCallable, Category="Audio Director|Play 3D")
-    void PlaySoundAtLocation(
-        UPARAM(DisplayName="Sound") USoundBase* Sound,
-        UPARAM(DisplayName="World Location") FVector Location,
-        UPARAM(DisplayName="Volume Multiplier") float Volume = 1.0f,
-        UPARAM(DisplayName="Pitch Multiplier") float Pitch = 1.0f
-    );
+    void PlaySoundAtLocation(USoundBase* Sound, FVector Location,
+                             float Volume = 1.0f, float Pitch = 1.0f);
 
-    /**
-     * Play a 3D sound relative to the player's camera.
-     * Offset: local camera space (X=forward, Y=right, Z=up).
-     */
     UFUNCTION(BlueprintCallable, Category="Audio Director|Play Relative To Player")
-    void PlaySoundRelativeToPlayer(
-        UPARAM(DisplayName="Sound") USoundBase* Sound,
-        UPARAM(DisplayName="Offset From Camera (Local)") FVector Offset,
-        UPARAM(DisplayName="Volume Multiplier") float Volume = 1.0f,
-        UPARAM(DisplayName="Pitch Multiplier") float Pitch = 1.0f
-    );
+    void PlaySoundRelativeToPlayer(USoundBase* Sound, FVector Offset,
+                                   float Volume = 1.0f, float Pitch = 1.0f);
 
-    /** Play a jumpscare stinger near the player's camera and duck ambience. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Play UI")
+    void PlayUISound(USoundBase* Sound, float Volume = 1.0f, float Pitch = 1.0f);
+
     UFUNCTION(BlueprintCallable, Category="Audio Director|Jumpscare")
-    void PlayJumpscare(
-        UPARAM(DisplayName="Stinger Sound") USoundBase* Stinger,
-        UPARAM(DisplayName="Ambience Duck Factor (0-1)") float AmbienceDuck = 0.2f
-    );
+    void PlayJumpscare(USoundBase* Stinger, float AmbienceDuck = 0.2f);
+
+    // ========= LOOPING SFX (start/stop) =========
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Looping")
+    void StartLoopingSFX2D(USoundBase* Sound, float Volume = 1.0f, float Pitch = 1.0f);
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Looping")
+    void StopLoopingSFX2D();
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Looping")
+    void StartLoopingSFXAtLocation(USoundBase* Sound, FVector Location,
+                                   float Volume = 1.0f, float Pitch = 1.0f);
+
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Looping")
+    void StopLoopingSFX3D();
 
     // ========= FOOTSTEPS =========
 
-    /** Play a footstep at a world location; chooses “normal” or “panic” based on tension. */
+    /** Play a footstep at a world location, using the given surface. */
     UFUNCTION(BlueprintCallable, Category="Audio Director|Footsteps")
-    void PlayFootstepAtLocation(
-        UPARAM(DisplayName="Footstep Location") FVector Location
-    );
+    void PlayFootstepAtLocation(FVector Location, EFootstepSurface Surface);
 
 protected:
-    // ========= TENSION STATE =========
-
+    // Tension
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Tension",
               meta=(ClampMin="0.0", ClampMax="1.0"))
     float CurrentTension = 0.0f;
@@ -108,8 +118,20 @@ protected:
 
     float InterpSpeed = 1.0f;
 
-    // ========= AMBIENCE LAYERS =========
+    // Volume
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
+              meta=(ClampMin="0.0", ClampMax="1.0"))
+    float MasterVolume = 1.0f;
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
+              meta=(ClampMin="0.0", ClampMax="1.0"))
+    float SFXVolume = 1.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
+              meta=(ClampMin="0.0", ClampMax="1.0"))
+    float UIVolume = 1.0f;
+
+    // Ambience
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience")
     USoundCue* CalmCue = nullptr;
 
@@ -128,46 +150,20 @@ protected:
     UPROPERTY(Transient)
     UAudioComponent* PanicAC = nullptr;
 
-    // ========= FOOTSTEPS =========
+    // Looping SFX
+    UPROPERTY(Transient)
+    UAudioComponent* LoopingSFX2D = nullptr;
 
+    UPROPERTY(Transient)
+    UAudioComponent* LoopingSFX3D = nullptr;
+
+    // Footsteps: one map per surface
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Footsteps")
-    TArray<USoundBase*> Footsteps_Normal;
+    TMap<EFootstepSurface, FFootstepSoundList> Footsteps_BySurface;
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Footsteps")
-    TArray<USoundBase*> Footsteps_Panic;
-
-    // ========= RANDOM STINGERS =========
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio Director|Stingers")
-    bool bEnableRandomStingers = true;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Stingers")
-    TArray<USoundBase*> Stingers_LowTension;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Stingers")
-    TArray<USoundBase*> Stingers_HighTension;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Stingers",
-              meta=(ClampMin="0.1"))
-    float MinStingerInterval_LowTension = 12.0f;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Stingers",
-              meta=(ClampMin="0.1"))
-    float MinStingerInterval_HighTension = 4.0f;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Stingers",
-              meta=(ClampMin="0.0", ClampMax="1.0"))
-    float StingerPlayChance = 0.7f;
-
-    float TimeSinceLastStinger = 0.0f;
-    float NextStingerDelay = 0.0f;
-
-    // ========= INTERNAL HELPERS =========
-
+    // Internal helpers
     void UpdateTension(float DeltaTime);
     void UpdateAmbienceVolumes();
-    void UpdateRandomStingers(float DeltaTime);
 
     USoundBase* ChooseRandomFromArray(const TArray<USoundBase*>& Array) const;
-    USoundBase* ChooseRandomStinger() const;
 };
