@@ -1,388 +1,14 @@
-// #include "GameAudioDirectorComponent.h"
-//
-// #include "Kismet/GameplayStatics.h"
-// #include "GameFramework/PlayerController.h"
-// #include "Camera/PlayerCameraManager.h"
-//
-// UGameAudioDirectorComponent::UGameAudioDirectorComponent()
-// {
-//     PrimaryComponentTick.bCanEverTick = true;
-// }
-//
-// void UGameAudioDirectorComponent::BeginPlay()
-// {
-//     Super::BeginPlay();
-//
-//     USoundCue* InitialCue = GetAmbienceCueForState(CurrentAmbienceState);
-//     if (InitialCue)
-//     {
-//         AmbienceAC = UGameplayStatics::SpawnSound2D(
-//             this,
-//             InitialCue,
-//             0.0f,
-//             1.0f,
-//             0.0f,
-//             nullptr,
-//             true,
-//             false
-//         );
-//     }
-//
-//     AmbienceTargetVolume = 1.0f;
-//     AmbienceFadeSpeed    = 1.0f;
-// }
-//
-// void UGameAudioDirectorComponent::TickComponent(
-//     float DeltaTime,
-//     ELevelTick TickType,
-//     FActorComponentTickFunction* ThisTickFunction)
-// {
-//     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//
-//     UpdateAmbience(DeltaTime);
-// }
-//
-// // ========= AMBIENCE STATE =========
-//
-// USoundCue* UGameAudioDirectorComponent::GetAmbienceCueForState(EAudioAmbienceState State) const
-// {
-//     switch (State)
-//     {
-//     case EAudioAmbienceState::Idle:        return IdleAmbienceCue;
-//     case EAudioAmbienceState::Exploration: return ExplorationAmbienceCue;
-//     case EAudioAmbienceState::Suspense:    return SuspenseAmbienceCue;
-//     case EAudioAmbienceState::Chase:       return ChaseAmbienceCue;
-//     case EAudioAmbienceState::SafeRoom:    return SafeRoomAmbienceCue;
-//     default:                               return nullptr;
-//     }
-// }
-//
-// void UGameAudioDirectorComponent::SetAmbienceState(EAudioAmbienceState NewState, float FadeTime)
-// {
-//     if (NewState == CurrentAmbienceState && AmbienceAC)
-//     {
-//         return;
-//     }
-//
-//     CurrentAmbienceState = NewState;
-//     USoundCue* NewCue    = GetAmbienceCueForState(NewState);
-//
-//     UWorld* World = GetWorld();
-//     if (!World)
-//     {
-//         return;
-//     }
-//
-//     if (!NewCue)
-//     {
-//         AmbienceTargetVolume = 0.0f;
-//         AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
-//         return;
-//     }
-//
-//     if (AmbienceAC && AmbienceAC->Sound != NewCue)
-//     {
-//         AmbienceAC->Stop();
-//         AmbienceAC = nullptr;
-//     }
-//
-//     if (!AmbienceAC)
-//     {
-//         AmbienceAC = UGameplayStatics::SpawnSound2D(
-//             this,
-//             NewCue,
-//             0.0f,
-//             1.0f,
-//             0.0f,
-//             nullptr,
-//             true,
-//             false
-//         );
-//     }
-//
-//     AmbienceTargetVolume = 1.0f;
-//     AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
-// }
-//
-// void UGameAudioDirectorComponent::UpdateAmbience(float DeltaTime)
-// {
-//     if (!AmbienceAC)
-//     {
-//         return;
-//     }
-//
-//     float StateScale = 1.0f;
-//     if (const float* Found = AmbienceStateVolumeScale.Find(CurrentAmbienceState))
-//     {
-//         StateScale = *Found;
-//     }
-//
-//     const float Desired = AmbienceTargetVolume * MasterVolume * StateScale;
-//     const float Current = AmbienceAC->VolumeMultiplier;
-//
-//     if (FMath::IsNearlyEqual(Current, Desired, 0.001f))
-//     {
-//         AmbienceAC->SetVolumeMultiplier(Desired);
-//         return;
-//     }
-//
-//     const float NewVol = FMath::FInterpTo(
-//         Current,
-//         Desired,
-//         DeltaTime,
-//         AmbienceFadeSpeed
-//     );
-//
-//     AmbienceAC->SetVolumeMultiplier(NewVol);
-// }
-//
-// // ========= VOLUME =========
-//
-// void UGameAudioDirectorComponent::SetMasterVolume(float NewVolume)
-// {
-//     MasterVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// void UGameAudioDirectorComponent::SetSFXVolume(float NewVolume)
-// {
-//     SFXVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// void UGameAudioDirectorComponent::SetUIVolume(float NewVolume)
-// {
-//     UIVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// void UGameAudioDirectorComponent::SetPlayerSFXVolume(float NewVolume)
-// {
-//     PlayerSFXVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// void UGameAudioDirectorComponent::SetEnemySFXVolume(float NewVolume)
-// {
-//     EnemySFXVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// void UGameAudioDirectorComponent::SetEnvironmentSFXVolume(float NewVolume)
-// {
-//     EnvironmentSFXVolume = FMath::Clamp(NewVolume, 0.0f, 1.0f);
-// }
-//
-// float UGameAudioDirectorComponent::GetCategoryVolume(EAudioSFXCategory Category) const
-// {
-//     switch (Category)
-//     {
-//     case EAudioSFXCategory::Player:      return PlayerSFXVolume;
-//     case EAudioSFXCategory::Enemy:       return EnemySFXVolume;
-//     case EAudioSFXCategory::Environment: return EnvironmentSFXVolume;
-//     case EAudioSFXCategory::General:
-//     default:                             return 1.0f;
-//     }
-// }
-//
-// // ========= SFX / UI =========
-//
-// void UGameAudioDirectorComponent::PlaySound2D(USoundBase* Sound, float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//     UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlaySoundAtLocation(USoundBase* Sound, FVector Location,
-//                                                       float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     UWorld* World = GetWorld();
-//     if (!World) return;
-//
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//     UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlayCategorizedSound2D(USoundBase* Sound, EAudioSFXCategory Category,
-//                                                          float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     const float CatVol      = GetCategoryVolume(Category);
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume * CatVol;
-//     UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlayCategorizedSoundAtLocation(USoundBase* Sound, EAudioSFXCategory Category,
-//                                                                  FVector Location, float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     UWorld* World = GetWorld();
-//     if (!World) return;
-//
-//     const float CatVol      = GetCategoryVolume(Category);
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume * CatVol;
-//     UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlaySoundRelativeToPlayer(USoundBase* Sound, FVector Offset,
-//                                                             float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     UWorld* World = GetWorld();
-//     if (!World) return;
-//
-//     APlayerController* PC = World->GetFirstPlayerController();
-//     if (!PC) return;
-//
-//     APlayerCameraManager* CamMgr = PC->PlayerCameraManager;
-//     if (!CamMgr) return;
-//
-//     const FVector CamLocation  = CamMgr->GetCameraLocation();
-//     const FRotator CamRotation = CamMgr->GetCameraRotation();
-//     const FVector WorldOffset  = CamRotation.RotateVector(Offset);
-//     const FVector SpawnLocation = CamLocation + WorldOffset;
-//
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//     UGameplayStatics::PlaySoundAtLocation(World, Sound, SpawnLocation, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlayUISound(USoundBase* Sound, float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//     const float FinalVolume = Volume * MasterVolume * UIVolume;
-//     UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
-// }
-//
-// void UGameAudioDirectorComponent::PlayJumpscare(USoundBase* Stinger,
-//                                                 float StingerVolume,
-//                                                 float StingerPitch,
-//                                                 float AmbienceDuck,
-//                                                 float FadeBackTime)
-// {
-//     if (!Stinger)
-//         return;
-//
-//     AmbienceDuck = FMath::Clamp(AmbienceDuck, 0.0f, 1.0f);
-//
-//     if (AmbienceAC)
-//     {
-//         AmbienceAC->SetVolumeMultiplier(MasterVolume * AmbienceDuck);
-//         AmbienceTargetVolume = 1.0f;
-//         AmbienceFadeSpeed    = (FadeBackTime > 0.01f) ? (1.0f / FadeBackTime) : 1000.0f;
-//     }
-//
-//     PlaySoundRelativeToPlayer(Stinger, FVector(100.0f, 0.0f, 0.0f),
-//                               StingerVolume, StingerPitch);
-// }
-//
-// // ========= LOOPING SFX =========
-//
-// void UGameAudioDirectorComponent::StartLoopingSFX2D(USoundBase* Sound, float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//
-//     StopLoopingSFX2D();
-//
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//
-//     LoopingSFX2D = UGameplayStatics::SpawnSound2D(
-//         this,
-//         Sound,
-//         FinalVolume,
-//         Pitch,
-//         0.0f,
-//         nullptr,
-//         true,
-//         false
-//     );
-// }
-//
-// void UGameAudioDirectorComponent::StopLoopingSFX2D()
-// {
-//     if (LoopingSFX2D)
-//     {
-//         LoopingSFX2D->Stop();
-//         LoopingSFX2D = nullptr;
-//     }
-// }
-//
-// void UGameAudioDirectorComponent::StartLoopingSFXAtLocation(USoundBase* Sound, FVector Location,
-//                                                             float Volume, float Pitch)
-// {
-//     if (!Sound) return;
-//
-//     StopLoopingSFX3D();
-//
-//     UWorld* World = GetWorld();
-//     if (!World) return;
-//
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//
-//     LoopingSFX3D = UGameplayStatics::SpawnSoundAtLocation(
-//         World,
-//         Sound,
-//         Location,
-//         FRotator::ZeroRotator,
-//         FinalVolume,
-//         Pitch,
-//         0.0f,
-//         nullptr,
-//         nullptr,
-//         true
-//     );
-// }
-//
-// void UGameAudioDirectorComponent::StopLoopingSFX3D()
-// {
-//     if (LoopingSFX3D)
-//     {
-//         LoopingSFX3D->Stop();
-//         LoopingSFX3D = nullptr;
-//     }
-// }
-//
-// // ========= FOOTSTEPS =========
-//
-// USoundBase* UGameAudioDirectorComponent::ChooseRandomFromArray(const TArray<USoundBase*>& Array) const
-// {
-//     if (Array.Num() == 0)
-//         return nullptr;
-//
-//     const int32 Index = FMath::RandRange(0, Array.Num() - 1);
-//     return Array[Index];
-// }
-//
-// void UGameAudioDirectorComponent::PlayFootstepAtLocation(FVector Location,
-//                                                          EFootstepSurface Surface,
-//                                                          float Volume,
-//                                                          float Pitch)
-// {
-//     UWorld* World = GetWorld();
-//     if (!World)
-//         return;
-//
-//     const FFootstepSoundList* ListPtr = Footsteps_BySurface.Find(Surface);
-//     if (!ListPtr)
-//     {
-//         ListPtr = Footsteps_BySurface.Find(EFootstepSurface::Default);
-//     }
-//     if (!ListPtr)
-//         return;
-//
-//     USoundBase* Chosen = ChooseRandomFromArray(ListPtr->Sounds);
-//     if (!Chosen)
-//         return;
-//
-//     const float FinalVolume = Volume * MasterVolume * SFXVolume;
-//     UGameplayStatics::PlaySoundAtLocation(World, Chosen, Location, FinalVolume, Pitch);
-// }
 #include "GameAudioDirectorComponent.h"
-
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
+#include "DrawDebugHelpers.h"
 
 UGameAudioDirectorComponent::UGameAudioDirectorComponent()
 {
     PrimaryComponentTick.bCanEverTick = true;
-    CurrentAmbienceState      = EAudioAmbienceState::Idle;
+    CurrentAmbienceState = EAudioAmbienceState::Idle;
     CurrentAmbienceCustomName = NAME_None;
 }
 
@@ -391,12 +17,12 @@ void UGameAudioDirectorComponent::BeginPlay()
     Super::BeginPlay();
 
     USoundCue* InitialCue = nullptr;
-
     // Prefer custom state if set, else enum default
     if (!CurrentAmbienceCustomName.IsNone())
     {
         InitialCue = GetCustomAmbienceCue(CurrentAmbienceCustomName);
     }
+
     if (!InitialCue)
     {
         InitialCue = GetDefaultAmbienceCue(CurrentAmbienceState);
@@ -417,7 +43,7 @@ void UGameAudioDirectorComponent::BeginPlay()
     }
 
     AmbienceTargetVolume = 1.0f;
-    AmbienceFadeSpeed    = 1.0f;
+    AmbienceFadeSpeed = 1.0f;
 }
 
 void UGameAudioDirectorComponent::TickComponent(
@@ -426,7 +52,6 @@ void UGameAudioDirectorComponent::TickComponent(
     FActorComponentTickFunction* ThisTickFunction)
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
     UpdateAmbience(DeltaTime);
 }
 
@@ -514,11 +139,10 @@ void UGameAudioDirectorComponent::SetAmbienceState(EAudioAmbienceState NewState,
         return;
     }
 
-    CurrentAmbienceState      = NewState;
+    CurrentAmbienceState = NewState;
     CurrentAmbienceCustomName = NAME_None; // using enum now
 
     USoundCue* NewCue = GetDefaultAmbienceCue(NewState);
-
     UWorld* World = GetWorld();
     if (!World)
     {
@@ -528,7 +152,7 @@ void UGameAudioDirectorComponent::SetAmbienceState(EAudioAmbienceState NewState,
     if (!NewCue)
     {
         AmbienceTargetVolume = 0.0f;
-        AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
+        AmbienceFadeSpeed = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
         return;
     }
 
@@ -553,7 +177,7 @@ void UGameAudioDirectorComponent::SetAmbienceState(EAudioAmbienceState NewState,
     }
 
     AmbienceTargetVolume = 1.0f;
-    AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
+    AmbienceFadeSpeed = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
 }
 
 void UGameAudioDirectorComponent::SetAmbienceStateByName(FName NewStateName, float FadeTime)
@@ -568,7 +192,6 @@ void UGameAudioDirectorComponent::SetAmbienceStateByName(FName NewStateName, flo
     // CurrentAmbienceState = EAudioAmbienceState::Idle;
 
     USoundCue* NewCue = GetCustomAmbienceCue(NewStateName);
-
     UWorld* World = GetWorld();
     if (!World)
     {
@@ -578,7 +201,7 @@ void UGameAudioDirectorComponent::SetAmbienceStateByName(FName NewStateName, flo
     if (!NewCue)
     {
         AmbienceTargetVolume = 0.0f;
-        AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
+        AmbienceFadeSpeed = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
         return;
     }
 
@@ -603,7 +226,7 @@ void UGameAudioDirectorComponent::SetAmbienceStateByName(FName NewStateName, flo
     }
 
     AmbienceTargetVolume = 1.0f;
-    AmbienceFadeSpeed    = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
+    AmbienceFadeSpeed = (FadeTime > 0.01f) ? (1.0f / FadeTime) : 1000.0f;
 }
 
 void UGameAudioDirectorComponent::UpdateAmbience(float DeltaTime)
@@ -614,7 +237,6 @@ void UGameAudioDirectorComponent::UpdateAmbience(float DeltaTime)
     }
 
     float StateScale = 1.0f;
-
     if (!CurrentAmbienceCustomName.IsNone())
     {
         StateScale = GetCustomAmbienceVolumeScale(CurrentAmbienceCustomName);
@@ -679,11 +301,11 @@ float UGameAudioDirectorComponent::GetCategoryVolume(EAudioSFXCategory Category)
 {
     switch (Category)
     {
-    case EAudioSFXCategory::Player:      return PlayerSFXVolume;
-    case EAudioSFXCategory::Enemy:       return EnemySFXVolume;
-    case EAudioSFXCategory::Environment: return EnvironmentSFXVolume;
-    case EAudioSFXCategory::General:
-    default:                             return 1.0f;
+        case EAudioSFXCategory::Player: return PlayerSFXVolume;
+        case EAudioSFXCategory::Enemy: return EnemySFXVolume;
+        case EAudioSFXCategory::Environment: return EnvironmentSFXVolume;
+        case EAudioSFXCategory::General:
+        default: return 1.0f;
     }
 }
 
@@ -697,7 +319,7 @@ void UGameAudioDirectorComponent::PlaySound2D(USoundBase* Sound, float Volume, f
 }
 
 void UGameAudioDirectorComponent::PlaySoundAtLocation(USoundBase* Sound, FVector Location,
-                                                      float Volume, float Pitch)
+    float Volume, float Pitch)
 {
     if (!Sound) return;
     UWorld* World = GetWorld();
@@ -708,28 +330,28 @@ void UGameAudioDirectorComponent::PlaySoundAtLocation(USoundBase* Sound, FVector
 }
 
 void UGameAudioDirectorComponent::PlayCategorizedSound2D(USoundBase* Sound, EAudioSFXCategory Category,
-                                                         float Volume, float Pitch)
+    float Volume, float Pitch)
 {
     if (!Sound) return;
-    const float CatVol      = GetCategoryVolume(Category);
+    const float CatVol = GetCategoryVolume(Category);
     const float FinalVolume = Volume * MasterVolume * SFXVolume * CatVol;
     UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, Pitch);
 }
 
 void UGameAudioDirectorComponent::PlayCategorizedSoundAtLocation(USoundBase* Sound, EAudioSFXCategory Category,
-                                                                 FVector Location, float Volume, float Pitch)
+    FVector Location, float Volume, float Pitch)
 {
     if (!Sound) return;
     UWorld* World = GetWorld();
     if (!World) return;
 
-    const float CatVol      = GetCategoryVolume(Category);
+    const float CatVol = GetCategoryVolume(Category);
     const float FinalVolume = Volume * MasterVolume * SFXVolume * CatVol;
     UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, FinalVolume, Pitch);
 }
 
 void UGameAudioDirectorComponent::PlaySoundRelativeToPlayer(USoundBase* Sound, FVector Offset,
-                                                            float Volume, float Pitch)
+    float Volume, float Pitch)
 {
     if (!Sound) return;
     UWorld* World = GetWorld();
@@ -741,9 +363,9 @@ void UGameAudioDirectorComponent::PlaySoundRelativeToPlayer(USoundBase* Sound, F
     APlayerCameraManager* CamMgr = PC->PlayerCameraManager;
     if (!CamMgr) return;
 
-    const FVector CamLocation  = CamMgr->GetCameraLocation();
+    const FVector CamLocation = CamMgr->GetCameraLocation();
     const FRotator CamRotation = CamMgr->GetCameraRotation();
-    const FVector WorldOffset  = CamRotation.RotateVector(Offset);
+    const FVector WorldOffset = CamRotation.RotateVector(Offset);
     const FVector SpawnLocation = CamLocation + WorldOffset;
 
     const float FinalVolume = Volume * MasterVolume * SFXVolume;
@@ -758,10 +380,10 @@ void UGameAudioDirectorComponent::PlayUISound(USoundBase* Sound, float Volume, f
 }
 
 void UGameAudioDirectorComponent::PlayJumpscare(USoundBase* Stinger,
-                                                float StingerVolume,
-                                                float StingerPitch,
-                                                float AmbienceDuck,
-                                                float FadeBackTime)
+    float StingerVolume,
+    float StingerPitch,
+    float AmbienceDuck,
+    float FadeBackTime)
 {
     if (!Stinger)
         return;
@@ -772,11 +394,11 @@ void UGameAudioDirectorComponent::PlayJumpscare(USoundBase* Stinger,
     {
         AmbienceAC->SetVolumeMultiplier(MasterVolume * AmbienceDuck);
         AmbienceTargetVolume = 1.0f;
-        AmbienceFadeSpeed    = (FadeBackTime > 0.01f) ? (1.0f / FadeBackTime) : 1000.0f;
+        AmbienceFadeSpeed = (FadeBackTime > 0.01f) ? (1.0f / FadeBackTime) : 1000.0f;
     }
 
     PlaySoundRelativeToPlayer(Stinger, FVector(100.0f, 0.0f, 0.0f),
-                              StingerVolume, StingerPitch);
+        StingerVolume, StingerPitch);
 }
 
 // ========= LOOPING SFX =========
@@ -811,7 +433,7 @@ void UGameAudioDirectorComponent::StopLoopingSFX2D()
 }
 
 void UGameAudioDirectorComponent::StartLoopingSFXAtLocation(USoundBase* Sound, FVector Location,
-                                                            float Volume, float Pitch)
+    float Volume, float Pitch)
 {
     if (!Sound) return;
 
@@ -857,9 +479,9 @@ USoundBase* UGameAudioDirectorComponent::ChooseRandomFromArray(const TArray<USou
 }
 
 void UGameAudioDirectorComponent::PlayFootstepAtLocation(FVector Location,
-                                                         EFootstepSurface Surface,
-                                                         float Volume,
-                                                         float Pitch)
+    EFootstepSurface Surface,
+    float Volume,
+    float Pitch)
 {
     UWorld* World = GetWorld();
     if (!World)
@@ -885,33 +507,153 @@ EFootstepSurface UGameAudioDirectorComponent::DetectSurfaceAtLocation(FVector Lo
 {
     UWorld* World = GetWorld();
     if (!World) return EFootstepSurface::Default;
-    
+
     FVector Start = Location;
     FVector End = Location - FVector(0.0f, 0.0f, TraceDistance);
-    
+
     FHitResult HitResult;
     FCollisionQueryParams QueryParams;
     QueryParams.bReturnPhysicalMaterial = true;
-    
+
     if (World->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, QueryParams))
     {
-        DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 0.1f);
         if (UPhysicalMaterial* PhysMat = HitResult.PhysMaterial.Get())
         {
-            EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(PhysMat);
-            
+            EPhysicalSurface SurfaceType = PhysMat->SurfaceType;
+
             // Map EPhysicalSurface to EFootstepSurface
             switch (SurfaceType)
             {
-            case SurfaceType1: return EFootstepSurface::Wood;
-            case SurfaceType2: return EFootstepSurface::Stone;
-            case SurfaceType3: return EFootstepSurface::Metal;
-            case SurfaceType4: return EFootstepSurface::Carpet;
-            case SurfaceType5: return EFootstepSurface::Water;
-            default: return EFootstepSurface::Default;
+                case SurfaceType1: return EFootstepSurface::Wood;
+                case SurfaceType2: return EFootstepSurface::Stone;
+                case SurfaceType3: return EFootstepSurface::Metal;
+                case SurfaceType4: return EFootstepSurface::Carpet;
+                case SurfaceType5: return EFootstepSurface::Water;
+                default: return EFootstepSurface::Default;
             }
         }
     }
-    
+
     return EFootstepSurface::Default;
+}
+
+// ========= RANDOMIZATION HELPER =========
+
+float UGameAudioDirectorComponent::ApplyRandomization(float BaseValue, float Variation) const
+{
+    if (Variation <= 0.0f)
+        return BaseValue;
+    
+    // Generate random value in range [BaseValue - Variation, BaseValue + Variation]
+    float RandomOffset = FMath::FRandRange(-Variation, Variation);
+    return FMath::Clamp(BaseValue + RandomOffset, 0.01f, 10.0f);
+}
+
+// ========= ENHANCED FOOTSTEPS WITH RANDOMIZATION =========
+
+void UGameAudioDirectorComponent::PlayFootstepAtLocationEx(
+    FVector Location,
+    EFootstepSurface Surface,
+    float Volume,
+    float Pitch,
+    bool bRandomizePitch,
+    float PitchVariation,
+    bool bRandomizeVolume,
+    float VolumeVariation)
+{
+    UWorld* World = GetWorld();
+    if (!World)
+        return;
+
+    const FFootstepSoundList* ListPtr = Footsteps_BySurface.Find(Surface);
+    if (!ListPtr)
+    {
+        ListPtr = Footsteps_BySurface.Find(EFootstepSurface::Default);
+    }
+    if (!ListPtr)
+        return;
+
+    USoundBase* Chosen = ChooseRandomFromArray(ListPtr->Sounds);
+    if (!Chosen)
+        return;
+
+    // Apply randomization
+    float FinalPitch = bRandomizePitch ? ApplyRandomization(Pitch, PitchVariation) : Pitch;
+    float FinalVolume = bRandomizeVolume ? ApplyRandomization(Volume, VolumeVariation) : Volume;
+    
+    FinalVolume *= MasterVolume * SFXVolume;
+    
+    UGameplayStatics::PlaySoundAtLocation(World, Chosen, Location, FinalVolume, FinalPitch);
+}
+
+// ========= ENHANCED 2D SOUND WITH RANDOMIZATION =========
+
+void UGameAudioDirectorComponent::PlaySound2DEx(
+    USoundBase* Sound,
+    float Volume,
+    float Pitch,
+    bool bRandomizePitch,
+    float PitchVariation,
+    bool bRandomizeVolume,
+    float VolumeVariation)
+{
+    if (!Sound) return;
+
+    // Apply randomization
+    float FinalPitch = bRandomizePitch ? ApplyRandomization(Pitch, PitchVariation) : Pitch;
+    float FinalVolume = bRandomizeVolume ? ApplyRandomization(Volume, VolumeVariation) : Volume;
+    
+    FinalVolume *= MasterVolume * SFXVolume;
+    
+    UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, FinalPitch);
+}
+
+// ========= ENHANCED 3D SOUND WITH RANDOMIZATION =========
+
+void UGameAudioDirectorComponent::PlaySoundAtLocationEx(
+    USoundBase* Sound,
+    FVector Location,
+    float Volume,
+    float Pitch,
+    bool bRandomizePitch,
+    float PitchVariation,
+    bool bRandomizeVolume,
+    float VolumeVariation,
+    float AttenuationMultiplier)
+{
+    if (!Sound) return;
+    UWorld* World = GetWorld();
+    if (!World) return;
+
+    // Apply randomization
+    float FinalPitch = bRandomizePitch ? ApplyRandomization(Pitch, PitchVariation) : Pitch;
+    float FinalVolume = bRandomizeVolume ? ApplyRandomization(Volume, VolumeVariation) : Volume;
+    
+    FinalVolume *= MasterVolume * SFXVolume * AttenuationMultiplier;
+    
+    UGameplayStatics::PlaySoundAtLocation(World, Sound, Location, FinalVolume, FinalPitch);
+}
+
+// ========= ENHANCED CATEGORIZED 2D SOUND WITH RANDOMIZATION =========
+
+void UGameAudioDirectorComponent::PlayCategorizedSound2DEx(
+    USoundBase* Sound,
+    EAudioSFXCategory Category,
+    float Volume,
+    float Pitch,
+    bool bRandomizePitch,
+    float PitchVariation,
+    bool bRandomizeVolume,
+    float VolumeVariation)
+{
+    if (!Sound) return;
+
+    // Apply randomization
+    float FinalPitch = bRandomizePitch ? ApplyRandomization(Pitch, PitchVariation) : Pitch;
+    float FinalVolume = bRandomizeVolume ? ApplyRandomization(Volume, VolumeVariation) : Volume;
+    
+    const float CatVol = GetCategoryVolume(Category);
+    FinalVolume *= MasterVolume * SFXVolume * CatVol;
+    
+    UGameplayStatics::PlaySound2D(this, Sound, FinalVolume, FinalPitch);
 }

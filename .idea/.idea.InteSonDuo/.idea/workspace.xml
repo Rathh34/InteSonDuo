@@ -15,8 +15,10 @@
   <component name="ChangeListManager">
     <list default="true" id="36d79f6f-47d7-46b5-bffb-4fcdda489b86" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.InteSonDuo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.InteSonDuo/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Dev/EnzoTest/EnzoTestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Dev/EnzoTest/EnzoTestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/HorrorProject/Dev/EnzoTest/StateTree/Evaluator/STE_EvaluatePerception.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/HorrorProject/Dev/EnzoTest/StateTree/Evaluator/STE_EvaluatePerception.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/GameAudioDirector/Binaries/Win64/UnrealEditor-GameAudioDirector.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/GameAudioDirector/Binaries/Win64/UnrealEditor-GameAudioDirector.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/GameAudioDirector/Source/GameAudioDirector/Private/GameAudioDirectorComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/GameAudioDirector/Source/GameAudioDirector/Private/GameAudioDirectorComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Plugins/GameAudioDirector/Source/GameAudioDirector/Public/GameAudioDirectorComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Plugins/GameAudioDirector/Source/GameAudioDirector/Public/GameAudioDirectorComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

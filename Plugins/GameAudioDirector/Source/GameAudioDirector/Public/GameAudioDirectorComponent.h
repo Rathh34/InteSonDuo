@@ -535,67 +535,120 @@ public:
         meta=(ToolTip="Perform a line trace to detect the surface type at the given location."))
     EFootstepSurface DetectSurfaceAtLocation(FVector Location, float TraceDistance = 100.0f);
 
+	 /** Play a footstep with optional pitch/volume randomization. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Footsteps",
+        meta=(ToolTip="Play a footstep sound with optional randomization of pitch and volume."))
+    void PlayFootstepAtLocationEx(
+        FVector Location,
+        EFootstepSurface Surface,
+        float Volume = 1.0f,
+        float Pitch = 1.0f,
+        bool bRandomizePitch = false,
+        float PitchVariation = 0.1f,
+        bool bRandomizeVolume = false,
+        float VolumeVariation = 0.1f);
+
+    /** Play a 2D sound with optional randomization. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Play 2D",
+        meta=(ToolTip="Play a 2D sound with optional pitch and volume randomization."))
+    void PlaySound2DEx(
+        USoundBase* Sound,
+        float Volume = 1.0f,
+        float Pitch = 1.0f,
+        bool bRandomizePitch = false,
+        float PitchVariation = 0.1f,
+        bool bRandomizeVolume = false,
+        float VolumeVariation = 0.1f);
+
+    /** Play a 3D sound at location with optional randomization. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Play 3D",
+        meta=(ToolTip="Play a 3D sound at a location with optional pitch and volume randomization."))
+    void PlaySoundAtLocationEx(
+        USoundBase* Sound,
+        FVector Location,
+        float Volume = 1.0f,
+        float Pitch = 1.0f,
+        bool bRandomizePitch = false,
+        float PitchVariation = 0.1f,
+        bool bRandomizeVolume = false,
+        float VolumeVariation = 0.1f,
+        float AttenuationMultiplier = 1.0f);
+
+    /** Play a categorized 2D sound with optional randomization. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Play 2D",
+        meta=(ToolTip="Play a categorized 2D sound with optional pitch and volume randomization."))
+    void PlayCategorizedSound2DEx(
+        USoundBase* Sound,
+        EAudioSFXCategory Category,
+        float Volume = 1.0f,
+        float Pitch = 1.0f,
+        bool bRandomizePitch = false,
+        float PitchVariation = 0.1f,
+        bool bRandomizeVolume = false,
+        float VolumeVariation = 0.1f);
+
+
 protected:
     // Ambience state (enum defaults)
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience",
-              meta=(ToolTip="Current enum ambience state (used for default ambience mapping)."))
+        meta=(ToolTip="Current enum ambience state (used for default ambience mapping)."))
     EAudioAmbienceState CurrentAmbienceState = EAudioAmbienceState::Idle;
 
     // Current custom ambience name (if using name-based custom state; None if using enum)
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience",
-              meta=(ToolTip="Current custom ambience state name. If None, the enum-based state is used."))
+        meta=(ToolTip="Current custom ambience state name. If None, the enum-based state is used."))
     FName CurrentAmbienceCustomName = NAME_None;
 
     /** Enum-based default ambience cues (Idle/Exploration/Suspense/Chase/SafeRoom). */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience",
-              meta=(ToolTip="Default ambience cues per enum state. Populate Idle/Exploration/Suspense/Chase/SafeRoom here."))
+        meta=(ToolTip="Default ambience cues per enum state. Populate Idle/Exploration/Suspense/Chase/SafeRoom here."))
     TMap<EAudioAmbienceState, USoundCue*> DefaultAmbienceCues;
 
     /** Enum-based default ambience volume scale (1.0 = normal). */
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience",
-              meta=(ToolTip="Extra volume multipliers per enum ambience state (1.0 = normal)."))
+        meta=(ToolTip="Extra volume multipliers per enum ambience state (1.0 = normal)."))
     TMap<EAudioAmbienceState, float> DefaultAmbienceVolumeScale;
 
     /** Custom ambience states that you can add/remove in Blueprint (name → cue + volume scale). */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio Director|Ambience",
-              meta=(ToolTip="Custom ambience states. Each maps a StateName to a looping SoundCue and volume scale."))
+        meta=(ToolTip="Custom ambience states. Each maps a StateName to a looping SoundCue and volume scale."))
     TArray<FCustomAmbienceEntry> CustomAmbienceEntries;
 
     UPROPERTY(Transient)
     UAudioComponent* AmbienceAC = nullptr;
 
     float AmbienceTargetVolume = 1.0f;
-    float AmbienceFadeSpeed    = 1.0f;
+    float AmbienceFadeSpeed = 1.0f;
 
     // Volume
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="Overall master volume for all sounds (0=mute, 1=full)."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="Overall master volume for all sounds (0=mute, 1=full)."))
     float MasterVolume = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="Main SFX volume multiplier for non-UI sounds."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="Main SFX volume multiplier for non-UI sounds."))
     float SFXVolume = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="UI volume multiplier used by PlayUISound."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="UI volume multiplier used by PlayUISound."))
     float UIVolume = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="Extra volume multiplier for Player SFX category."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="Extra volume multiplier for Player SFX category."))
     float PlayerSFXVolume = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="Extra volume multiplier for Enemy SFX category."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="Extra volume multiplier for Enemy SFX category."))
     float EnemySFXVolume = 1.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Volume",
-              meta=(ClampMin="0.0", ClampMax="1.0",
-                   ToolTip="Extra volume multiplier for Environment SFX category."))
+        meta=(ClampMin="0.0", ClampMax="1.0",
+        ToolTip="Extra volume multiplier for Environment SFX category."))
     float EnvironmentSFXVolume = 1.0f;
 
     // Looping SFX
@@ -607,18 +660,16 @@ protected:
 
     // Footsteps
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Footsteps",
-              meta=(ToolTip="Footstep sounds per surface type. If a surface is missing, Default is used as fallback."))
+        meta=(ToolTip="Footstep sounds per surface type. If a surface is missing, Default is used as fallback."))
     TMap<EFootstepSurface, FFootstepSoundList> Footsteps_BySurface;
 
     // Internal helpers
     USoundCue* GetDefaultAmbienceCue(EAudioAmbienceState State) const;
     float GetDefaultAmbienceVolumeScale(EAudioAmbienceState State) const;
-
     USoundCue* GetCustomAmbienceCue(FName StateName) const;
     float GetCustomAmbienceVolumeScale(FName StateName) const;
-
     void UpdateAmbience(float DeltaTime);
-
     float GetCategoryVolume(EAudioSFXCategory Category) const;
     USoundBase* ChooseRandomFromArray(const TArray<USoundBase*>& Array) const;
+    float ApplyRandomization(float BaseValue, float Variation) const;  // ADD THIS LINE
 };
