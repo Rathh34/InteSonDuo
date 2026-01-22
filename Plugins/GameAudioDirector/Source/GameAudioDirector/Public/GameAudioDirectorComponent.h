@@ -529,6 +529,11 @@ public:
                                 float Volume = 1.0f,
                                 float Pitch = 1.0f);
 
+    /** Detect surface type at a world location via line trace. */
+    UFUNCTION(BlueprintCallable, Category="Audio Director|Footsteps",
+        meta=(ToolTip="Perform a line trace to detect the surface type at the given location."))
+    EFootstepSurface DetectSurfaceAtLocation(FVector Location, float TraceDistance = 100.0f);
+
 protected:
     // Ambience state (enum defaults)
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Audio Director|Ambience",

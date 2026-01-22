@@ -880,3 +880,37 @@ void UGameAudioDirectorComponent::PlayFootstepAtLocation(FVector Location,
     const float FinalVolume = Volume * MasterVolume * SFXVolume;
     UGameplayStatics::PlaySoundAtLocation(World, Chosen, Location, FinalVolume, Pitch);
 }
+
+EFootstepSurface UGameAudioDirectorComponent::DetectSurfaceAtLocation(FVector Location, float TraceDistance)
+{
+    UWorld* World = GetWorld();
+    if (!World) return EFootstepSurface::Default;
+    
+    FVector Start = Location;
+    FVector End = Location - FVector(0.0f, 0.0f, TraceDistance);
+    
+    FHitResult HitResult;
+    FCollisionQueryParams QueryParams;
+    QueryParams.bReturnPhysicalMaterial = true;
+    
+    if (World->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, QueryParams))
+    {
+        DrawDebugLine(GetWorld(), Start, End, FColor::Green, false, 0.1f);
+        if (UPhysicalMaterial* PhysMat = HitResult.PhysMaterial.Get())
+        {
+            EPhysicalSurface SurfaceType = UPhysicalMaterial::DetermineSurfaceType(PhysMat);
+            
+            // Map EPhysicalSurface to EFootstepSurface
+            switch (SurfaceType)
+            {
+            case SurfaceType1: return EFootstepSurface::Wood;
+            case SurfaceType2: return EFootstepSurface::Stone;
+            case SurfaceType3: return EFootstepSurface::Metal;
+            case SurfaceType4: return EFootstepSurface::Carpet;
+            default: return EFootstepSurface::Default;
+            }
+        }
+    }
+    
+    return EFootstepSurface::Default;
+}

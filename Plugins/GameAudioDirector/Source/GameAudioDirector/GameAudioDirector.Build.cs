@@ -9,6 +9,7 @@ public class GameAudioDirector : ModuleRules
 		PublicDependencyModuleNames.AddRange(new[]
 		{
 			"Core",
+			"PhysicsCore"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new[]
