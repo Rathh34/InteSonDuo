@@ -907,6 +907,7 @@ EFootstepSurface UGameAudioDirectorComponent::DetectSurfaceAtLocation(FVector Lo
             case SurfaceType2: return EFootstepSurface::Stone;
             case SurfaceType3: return EFootstepSurface::Metal;
             case SurfaceType4: return EFootstepSurface::Carpet;
+            case SurfaceType5: return EFootstepSurface::Water;
             default: return EFootstepSurface::Default;
             }
         }

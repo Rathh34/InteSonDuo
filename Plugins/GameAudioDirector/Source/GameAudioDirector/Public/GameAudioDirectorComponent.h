@@ -319,7 +319,8 @@ enum class EFootstepSurface : uint8
     Wood    UMETA(DisplayName="Wood"),
     Stone   UMETA(DisplayName="Stone"),
     Metal   UMETA(DisplayName="Metal"),
-    Carpet  UMETA(DisplayName="Carpet")
+    Carpet  UMETA(DisplayName="Carpet"),
+	Water	UMETA(DisplayName="Water")
 };
 
 USTRUCT(BlueprintType)
